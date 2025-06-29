@@ -5,12 +5,13 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware for parsing JSON and URL-encoded data
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static( 'A:\Delta\Ticket Hub\Public\home'));
 
+const UserRoute =  require("./routes/user");
+const HomeRoute = require("./routes/home");
 
-app.get('/', (req, res) => {
-  res.sendFile("../public/index.html");
-});
+app.use("/user" , UserRoute);
+app.use("/home", HomeRoute);
 
 
 app.listen(PORT, () => {
