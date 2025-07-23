@@ -1,0 +1,36 @@
+<!-- views/success.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Success</title>
+</head>
+<body>
+  <h1>Login Successful</h1>
+  <p>Redirecting...</p>
+  <script>
+    // Get token from EJS (injected by server)
+    const token = '<%= token %>';
+    // Store token in localStorage
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('jwtToken', token);
+      fetch('/home', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+        .then(response => {
+          if (response.ok) {
+            window.location.href = '/home';
+          } else {
+            window.location.href = '/login';
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          window.location.href = '/login';
+        });
+    } else {
+      console.error('localStorage is not available.');
+      // Fallback or error handling
+    }
+  </script>
+</body>
+</html>
